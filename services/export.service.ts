@@ -5,7 +5,7 @@ export interface ExportJob {
   id: string;
   status: "PENDING" | "PROCESSING" | "COMPLETED" | "FAILED" | "EXPIRED";
   progress: number;
-  outputPath: string | null;
+  outputUrl: string | null;
   errorMessage: string | null;
 }
 

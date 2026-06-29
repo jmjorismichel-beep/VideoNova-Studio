@@ -30,7 +30,7 @@ export async function GET(
     return NextResponse.json({ error: "Accès refusé" }, { status: 403 });
   }
 
-  if (exportJob.status !== "COMPLETED" || !exportJob.outputPath) {
+  if (exportJob.status !== "COMPLETED" || !exportJob.outputUrl) {
     return NextResponse.json({ error: "Export non disponible" }, { status: 400 });
   }
 
@@ -45,7 +45,7 @@ export async function GET(
   }
 
   // Construire le chemin du fichier
-  const filePath = path.join(process.cwd(), "public", exportJob.outputPath.replace(/^\//, ""));
+  const filePath = path.join(process.cwd(), "public", exportJob.outputUrl.replace(/^\//, ""));
 
   if (!existsSync(filePath)) {
     return NextResponse.json({ error: "Fichier introuvable" }, { status: 404 });

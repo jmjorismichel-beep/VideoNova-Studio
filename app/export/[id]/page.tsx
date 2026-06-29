@@ -13,7 +13,7 @@ interface ExportJob {
   id: string;
   status: ExportStatus;
   progress: number;
-  outputPath: string | null;
+  outputUrl: string | null;
   errorMessage: string | null;
   project: { nom: string };
   createdAt: string;
@@ -52,8 +52,8 @@ export default function ExportStatusPage() {
   }, [id]);
 
   const handleDownload = () => {
-    if (job?.outputPath) {
-      window.open(job.outputPath, "_blank");
+    if (job?.outputUrl) {
+      window.open(job.outputUrl, "_blank");
     }
   };
 
