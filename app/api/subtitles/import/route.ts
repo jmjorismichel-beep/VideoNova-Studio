@@ -2,8 +2,8 @@
 // Import d'un fichier de sous-titres SRT
 
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
 interface SRTEntry {
@@ -44,7 +44,7 @@ function parseSRT(content: string): SRTEntry[] {
 }
 
 export async function POST(request: NextRequest) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (!session) {
     return NextResponse.json({ error: "Non authentifié" }, { status: 401 });

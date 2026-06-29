@@ -2,8 +2,7 @@
 // Route API pour la bibliothèque de modèles
 
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
 // GET /api/templates
@@ -41,7 +40,7 @@ export async function GET(request: Request) {
 
 // POST /api/templates — admin uniquement
 export async function POST(request: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
   if ((session.user as { role?: string })?.role !== "ADMIN") {
     return NextResponse.json({ error: "Accès refusé" }, { status: 403 });

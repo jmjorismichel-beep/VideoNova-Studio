@@ -1,14 +1,13 @@
 // app/admin/page.tsx
 // Tableau de bord administrateur
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { Users, FolderVideo, Download, AlertTriangle } from "lucide-react";
 
 export default async function AdminPage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (!session || (session.user as { role?: string })?.role !== "ADMIN") {
     redirect("/dashboard");
