@@ -30,7 +30,7 @@ export default async function AdminPage() {
   const recentExports = await prisma.exportJob.findMany({
     take: 10,
     orderBy: { createdAt: "desc" },
-    include: { project: { select: { nom: true } }, user: { select: { email: true } } },
+    include: { project: { select: { name: true } }, user: { select: { email: true } } },
   });
 
   const stats = [
@@ -118,7 +118,7 @@ export default async function AdminPage() {
                   {recentExports.map((exp) => (
                     <tr key={exp.id}>
                       <td className="py-2.5">
-                        <div className="font-medium text-white truncate max-w-[150px]">{exp.project.nom}</div>
+                        <div className="font-medium text-white truncate max-w-[150px]">{exp.project.name}</div>
                         <div className="text-xs text-gray-500">{exp.user.email}</div>
                       </td>
                       <td className="py-2.5">
