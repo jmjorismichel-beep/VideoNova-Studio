@@ -39,7 +39,7 @@ export async function GET(
   if (ageMs > 24 * 60 * 60 * 1000) {
     await prisma.exportJob.update({
       where: { id: params.id },
-      data: { status: "EXPIRED" },
+      data: { status: "FAILED" },
     });
     return NextResponse.json({ error: "Export expiré (24h dépassées)" }, { status: 410 });
   }

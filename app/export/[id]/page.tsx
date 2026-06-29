@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Download, CheckCircle, XCircle, Loader2, ArrowLeft } from "lucide-react";
 
-type ExportStatus = "PENDING" | "PROCESSING" | "COMPLETED" | "FAILED" | "EXPIRED";
+type ExportStatus = "PENDING" | "PROCESSING" | "COMPLETED" | "FAILED";
 
 interface ExportJob {
   id: string;
@@ -37,7 +37,7 @@ export default function ExportStatusPage() {
         setIsLoading(false);
 
         // Arrêter le polling si terminé
-        if (data.status === "COMPLETED" || data.status === "FAILED" || data.status === "EXPIRED") {
+        if (data.status === "COMPLETED" || data.status === "FAILED") {
           clearInterval(interval);
         }
       } catch {
@@ -74,7 +74,6 @@ export default function ExportStatusPage() {
     PROCESSING: "Export en cours…",
     COMPLETED: "Export terminé !",
     FAILED: "Échec de l'export",
-    EXPIRED: "Export expiré (24h dépassées)",
   };
 
   return (
