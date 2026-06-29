@@ -290,5 +290,4 @@ function TimelineItem({ element, pxPerSec, isSelected, sceneDuration, onSelect, 
   );
 }
 
-// Fix TypeScript pour useRef dans fonctions nested
-import { useRef } from "react";
+
