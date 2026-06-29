@@ -1,0 +1,343 @@
+// schema.prisma — VideoNova Studio
+// Version 1.0 MVP
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────
+// ENUM
+// ─────────────────────────────────────────
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Plan {
+  FREE
+  PREMIUM
+  ENTERPRISE
+}
+
+enum ProjectStatus {
+  DRAFT
+  READY
+  ARCHIVED
+}
+
+enum ExportStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum MediaType {
+  VIDEO
+  IMAGE
+  AUDIO
+  SUBTITLE
+  LOGO
+}
+
+enum AvatarStyle {
+  REALISTIC
+  CARTOON
+  ANIMATED
+  CUSTOM
+}
+
+// ─────────────────────────────────────────
+// USER
+// ─────────────────────────────────────────
+
+model User {
+  id              String        @id @default(cuid())
+  email           String        @unique
+  name            String?
+  password        String?
+  image           String?
+  role            Role          @default(USER)
+  plan            Plan          @default(FREE)
+  isActive        Boolean       @default(true)
+  storageUsed     BigInt        @default(0)
+  exportsThisMonth Int          @default(0)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  projects        Project[]
+  mediaAssets     MediaAsset[]
+  exportJobs      ExportJob[]
+  subscription    Subscription?
+  usageLogs       UsageLog[]
+  reports         Report[]
+  voiceGenerations VoiceGeneration[]
+
+  @@map("users")
+}
+
+// ─────────────────────────────────────────
+// PROJECT
+// ─────────────────────────────────────────
+
+model Project {
+  id            String        @id @default(cuid())
+  userId        String
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name          String
+  description   String?
+  status        ProjectStatus @default(DRAFT)
+  format        String        @default("16:9")
+  resolution    String        @default("1080p")
+  duration      Float         @default(0)
+  thumbnail     String?
+  isFavorite    Boolean       @default(false)
+  jsonData      Json
+  version       String        @default("1.0")
+  templateId    String?
+  template      Template?     @relation(fields: [templateId], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  scenes        Scene[]
+  mediaAssets   MediaAsset[]
+  exportJobs    ExportJob[]
+  subtitles     Subtitle[]
+
+  @@index([userId])
+  @@map("projects")
+}
+
+// ─────────────────────────────────────────
+// SCENE
+// ─────────────────────────────────────────
+
+model Scene {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  order       Int
+  name        String?
+  duration    Float
+  background  Json?
+  elements    Json
+  transitions Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([projectId])
+  @@map("scenes")
+}
+
+// ─────────────────────────────────────────
+// MEDIA ASSET
+// ─────────────────────────────────────────
+
+model MediaAsset {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId   String?
+  project     Project?  @relation(fields: [projectId], references: [id])
+  type        MediaType
+  name        String
+  originalName String
+  url         String
+  size        BigInt
+  mimeType    String
+  duration    Float?
+  width       Int?
+  height      Int?
+  createdAt   DateTime  @default(now())
+
+  @@index([userId])
+  @@index([projectId])
+  @@map("media_assets")
+}
+
+// ─────────────────────────────────────────
+// EXPORT JOB
+// ─────────────────────────────────────────
+
+model ExportJob {
+  id          String       @id @default(cuid())
+  userId      String
+  user        User         @relation(fields: [userId], references: [id])
+  projectId   String
+  project     Project      @relation(fields: [projectId], references: [id])
+  status      ExportStatus @default(PENDING)
+  progress    Int          @default(0)
+  resolution  String       @default("1080p")
+  format      String       @default("mp4")
+  outputUrl   String?
+  error       String?
+  startedAt   DateTime?
+  completedAt DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime     @default(now())
+
+  @@index([userId])
+  @@index([projectId])
+  @@map("export_jobs")
+}
+
+// ─────────────────────────────────────────
+// TEMPLATE
+// ─────────────────────────────────────────
+
+model Template {
+  id            String   @id @default(cuid())
+  name          String
+  description   String?
+  category      String
+  thumbnail     String?
+  format        String   @default("16:9")
+  duration      Float?
+  isPublic      Boolean  @default(true)
+  isPremium     Boolean  @default(false)
+  jsonData      Json
+  usageCount    Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  projects      Project[]
+
+  @@map("templates")
+}
+
+// ─────────────────────────────────────────
+// SUBTITLE
+// ─────────────────────────────────────────
+
+model Subtitle {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  startTime Float
+  endTime   Float
+  text      String
+  language  String   @default("fr")
+  style     Json?
+  createdAt DateTime @default(now())
+
+  @@index([projectId])
+  @@map("subtitles")
+}
+
+// ─────────────────────────────────────────
+// VOICE GENERATION (IA future)
+// ─────────────────────────────────────────
+
+model VoiceGeneration {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  text      String
+  voiceId   String
+  provider  String   @default("elevenlabs")
+  audioUrl  String?
+  duration  Float?
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("voice_generations")
+}
+
+// ─────────────────────────────────────────
+// AVATAR (IA future)
+// ─────────────────────────────────────────
+
+model Avatar {
+  id          String      @id @default(cuid())
+  name        String
+  style       AvatarStyle @default(REALISTIC)
+  imageUrl    String
+  previewUrl  String?
+  isPremium   Boolean     @default(false)
+  isPublic    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+
+  @@map("avatars")
+}
+
+// ─────────────────────────────────────────
+// SUBSCRIPTION
+// ─────────────────────────────────────────
+
+model Subscription {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id])
+  stripeCustomerId  String?
+  stripePriceId     String?
+  stripeSubId       String?
+  plan              Plan     @default(FREE)
+  status            String   @default("active")
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  cancelAtPeriodEnd  Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("subscriptions")
+}
+
+// ─────────────────────────────────────────
+// USAGE LOG
+// ─────────────────────────────────────────
+
+model UsageLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  action    String
+  details   Json?
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("usage_logs")
+}
+
+// ─────────────────────────────────────────
+// REPORT (signalement)
+// ─────────────────────────────────────────
+
+model Report {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  targetType  String
+  targetId    String
+  reason      String
+  description String?
+  status      String   @default("pending")
+  resolvedAt  DateTime?
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@map("reports")
+}
+
+// ─────────────────────────────────────────
+// ADMIN LOG
+// ─────────────────────────────────────────
+
+model AdminLog {
+  id        String   @id @default(cuid())
+  adminId   String
+  action    String
+  targetType String?
+  targetId  String?
+  details   Json?
+  createdAt DateTime @default(now())
+
+  @@map("admin_logs")
+}

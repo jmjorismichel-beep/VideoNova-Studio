@@ -1,0 +1,236 @@
+{
+  "id": "proj_exemple_001",
+  "version": "1.0",
+  "name": "Présentation formation numérique",
+  "format": "16:9",
+  "resolution": "1080p",
+  "duration": 30,
+  "scenes": [
+    {
+      "id": "scene_001",
+      "order": 0,
+      "name": "Introduction",
+      "duration": 10,
+      "background": {
+        "type": "color",
+        "value": "#1a1a3e"
+      },
+      "elements": [
+        {
+          "id": "el_001",
+          "type": "text",
+          "position": { "x": 10, "y": 35 },
+          "dimension": { "width": 80, "height": 20 },
+          "startTime": 0,
+          "duration": 10,
+          "opacity": 1,
+          "zIndex": 2,
+          "content": "Bienvenue dans notre formation",
+          "style": {
+            "fontFamily": "Poppins",
+            "fontSize": 48,
+            "fontWeight": "700",
+            "color": "#ffffff",
+            "textAlign": "center",
+            "letterSpacing": -1
+          },
+          "animationIn": {
+            "type": "fadeIn",
+            "duration": 0.8,
+            "delay": 0.2,
+            "easing": "ease-out"
+          }
+        },
+        {
+          "id": "el_002",
+          "type": "text",
+          "position": { "x": 15, "y": 58 },
+          "dimension": { "width": 70, "height": 12 },
+          "startTime": 1,
+          "duration": 9,
+          "opacity": 1,
+          "zIndex": 2,
+          "content": "Module 1 — Les bases du numérique",
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 24,
+            "fontWeight": "400",
+            "color": "#f97316",
+            "textAlign": "center"
+          },
+          "animationIn": {
+            "type": "slideUp",
+            "duration": 0.6,
+            "delay": 0.5
+          }
+        },
+        {
+          "id": "el_003",
+          "type": "logo",
+          "src": "/uploads/user_id/logo_exemple.png",
+          "assetId": "asset_logo_001",
+          "position": { "x": 80, "y": 5 },
+          "dimension": { "width": 15, "height": 10 },
+          "startTime": 0,
+          "duration": 10,
+          "opacity": 0.9,
+          "zIndex": 3,
+          "objectFit": "contain"
+        }
+      ],
+      "transition": {
+        "type": "fade",
+        "duration": 0.5
+      }
+    },
+    {
+      "id": "scene_002",
+      "order": 1,
+      "name": "Contenu principal",
+      "duration": 15,
+      "background": {
+        "type": "color",
+        "value": "#0f0f1e"
+      },
+      "elements": [
+        {
+          "id": "el_004",
+          "type": "video",
+          "src": "/uploads/user_id/demo_video.mp4",
+          "assetId": "asset_vid_001",
+          "position": { "x": 5, "y": 10 },
+          "dimension": { "width": 55, "height": 70 },
+          "startTime": 0,
+          "duration": 15,
+          "opacity": 1,
+          "zIndex": 1,
+          "volume": 0.8,
+          "muted": false,
+          "loop": false,
+          "trimStart": 0,
+          "trimEnd": 15,
+          "fadeIn": 0.3,
+          "fadeOut": 0.3
+        },
+        {
+          "id": "el_005",
+          "type": "text",
+          "position": { "x": 63, "y": 15 },
+          "dimension": { "width": 33, "height": 60 },
+          "startTime": 0.5,
+          "duration": 14.5,
+          "opacity": 1,
+          "zIndex": 2,
+          "content": "Points clés :\n• Comprendre l'interface\n• Naviguer sur le web\n• Utiliser les outils bureautiques\n• Sécuriser ses données",
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 18,
+            "fontWeight": "400",
+            "color": "#e2e8f0",
+            "textAlign": "left",
+            "lineHeight": 1.6
+          }
+        },
+        {
+          "id": "el_006",
+          "type": "audio",
+          "src": "/uploads/user_id/musique_fond.mp3",
+          "assetId": "asset_aud_001",
+          "position": { "x": 0, "y": 0 },
+          "dimension": { "width": 100, "height": 5 },
+          "startTime": 0,
+          "duration": 15,
+          "opacity": 1,
+          "zIndex": 0,
+          "volume": 0.3,
+          "muted": false,
+          "loop": true,
+          "fadeIn": 1,
+          "fadeOut": 1
+        }
+      ],
+      "transition": {
+        "type": "slide-left",
+        "duration": 0.6
+      }
+    },
+    {
+      "id": "scene_003",
+      "order": 2,
+      "name": "Conclusion",
+      "duration": 5,
+      "background": {
+        "type": "gradient",
+        "value": "linear-gradient(135deg, #1a1a3e 0%, #2a1050 100%)"
+      },
+      "elements": [
+        {
+          "id": "el_007",
+          "type": "text",
+          "position": { "x": 10, "y": 30 },
+          "dimension": { "width": 80, "height": 25 },
+          "startTime": 0,
+          "duration": 5,
+          "opacity": 1,
+          "zIndex": 2,
+          "content": "Merci de votre attention",
+          "style": {
+            "fontFamily": "Poppins",
+            "fontSize": 42,
+            "fontWeight": "700",
+            "color": "#ffffff",
+            "textAlign": "center"
+          },
+          "animationIn": { "type": "zoomIn", "duration": 0.7 },
+          "animationOut": { "type": "fadeIn", "duration": 0.5 }
+        },
+        {
+          "id": "el_008",
+          "type": "subtitle",
+          "position": { "x": 5, "y": 82 },
+          "dimension": { "width": 90, "height": 10 },
+          "startTime": 0,
+          "duration": 5,
+          "opacity": 1,
+          "zIndex": 3,
+          "content": "Merci de votre attention",
+          "language": "fr",
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 20,
+            "fontWeight": "500",
+            "color": "#ffffff",
+            "backgroundColor": "rgba(0,0,0,0.7)",
+            "textAlign": "center",
+            "padding": 8,
+            "borderRadius": 6
+          }
+        }
+      ]
+    }
+  ],
+  "exportSettings": {
+    "format": "16:9",
+    "resolution": "1080p",
+    "fps": 30,
+    "quality": "high",
+    "codec": "h264",
+    "audioBitrate": "192k",
+    "addWatermark": false
+  },
+  "meta": {
+    "author": "Joris Michel",
+    "authorId": "user_exemple_001",
+    "tags": ["formation", "numérique", "pédagogie"],
+    "language": "fr",
+    "description": "Présentation de la formation numérique — Module 1"
+  },
+  "createdAt": "2024-06-01T10:00:00.000Z",
+  "updatedAt": "2024-06-15T14:30:00.000Z",
+  "_export": {
+    "exportedAt": "2024-06-15T14:30:00.000Z",
+    "exportedBy": "joris@exemple.fr",
+    "appVersion": "1.0",
+    "format": "VideoNova-Studio-Project"
+  }
+}
