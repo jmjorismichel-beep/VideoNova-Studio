@@ -4,7 +4,7 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
-import { Users, FolderVideo, Download, AlertTriangle } from "lucide-react";
+import { Users, Folder, Download, AlertTriangle } from "lucide-react";
 
 export default async function AdminPage() {
   const session = await auth();
@@ -35,7 +35,7 @@ export default async function AdminPage() {
 
   const stats = [
     { label: "Utilisateurs", value: totalUsers, icon: <Users className="w-5 h-5" />, color: "text-blue-400" },
-    { label: "Projets", value: totalProjects, icon: <FolderVideo className="w-5 h-5" />, color: "text-green-400" },
+    { label: "Projets", value: totalProjects, icon: <Folder className="w-5 h-5" />, color: "text-green-400" },
     { label: "Exports totaux", value: totalExports, icon: <Download className="w-5 h-5" />, color: "text-nova-400" },
     { label: "Signalements en attente", value: totalReports, icon: <AlertTriangle className="w-5 h-5" />, color: "text-amber-400" },
   ];
