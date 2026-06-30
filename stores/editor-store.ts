@@ -257,7 +257,7 @@ export const useEditorStore = create<EditorStore>()(
             return {
               ...s,
               elements: s.elements.map((el) =>
-                el.id === elementId ? { ...el, ...updates } : el
+                el.id === elementId ? ({ ...el, ...updates } as SceneElement) : el
               ),
             };
           });
