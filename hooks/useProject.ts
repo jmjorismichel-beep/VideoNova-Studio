@@ -21,7 +21,7 @@ export function useProject(projectId: string) {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          nom: project.nom,
+          name: project.name,
           content: project,
           updatedAt: new Date().toISOString(),
         }),
@@ -74,7 +74,7 @@ export function useProject(projectId: string) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${project.nom.replace(/\s+/g, "-")}.videonova.json`;
+    a.download = `${project.name.replace(/\s+/g, "-")}.videonova.json`;
     a.click();
     URL.revokeObjectURL(url);
   }, [project]);
