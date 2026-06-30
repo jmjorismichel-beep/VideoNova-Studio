@@ -89,11 +89,9 @@ export async function POST(request: NextRequest) {
       prisma.subtitle.create({
         data: {
           projectId,
-          index: entry.index,
           startTime: entry.startTime,
           endTime: entry.endTime,
           text: entry.text,
-          language: "fr",
         },
       })
     )
