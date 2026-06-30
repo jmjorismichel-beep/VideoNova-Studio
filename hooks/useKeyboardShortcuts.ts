@@ -10,7 +10,7 @@ interface ShortcutOptions {
 }
 
 export function useKeyboardShortcuts({ onSave, onExport }: ShortcutOptions = {}) {
-  const { undo, redo, setPlaying, isPlaying, deleteElement, selectedElementId } =
+  const { undo, redo, setPlaying, isPlaying, deleteElement, selectedElementId, selectedSceneId } =
     useEditorStore();
 
   useEffect(() => {
@@ -42,13 +42,13 @@ export function useKeyboardShortcuts({ onSave, onExport }: ShortcutOptions = {})
       } else if (e.key === " ") {
         e.preventDefault();
         setPlaying(!isPlaying);
-      } else if ((e.key === "Delete" || e.key === "Backspace") && selectedElementId) {
+      } else if ((e.key === "Delete" || e.key === "Backspace") && selectedElementId && selectedSceneId) {
         e.preventDefault();
-        deleteElement(selectedElementId);
+        deleteElement(selectedSceneId, selectedElementId);
       }
     };
 
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [undo, redo, onSave, onExport, setPlaying, isPlaying, deleteElement, selectedElementId]);
+  }, [undo, redo, onSave, onExport, setPlaying, isPlaying, deleteElement, selectedElementId, selectedSceneId]);
 }
