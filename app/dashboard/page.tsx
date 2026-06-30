@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import UserMenu from "@/components/UserMenu";
 import {
   Plus, Upload, LayoutTemplate, Clock, Star,
   Video, MoreVertical, Edit2, Copy, Trash2, Download
@@ -85,6 +86,11 @@ export default async function DashboardPage() {
               Passer au Premium →
             </Link>
           )}
+        </div>
+
+        {/* Menu utilisateur */}
+        <div className="p-3 border-t border-gray-800">
+          <UserMenu name={user?.name ?? null} email={session.user.email ?? null} />
         </div>
       </aside>
 
