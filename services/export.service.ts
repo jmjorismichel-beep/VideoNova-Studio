@@ -3,7 +3,7 @@
 
 export interface ExportJob {
   id: string;
-  status: "PENDING" | "PROCESSING" | "COMPLETED" | "FAILED" | "FAILED";
+  status: "PENDING" | "PROCESSING" | "COMPLETED" | "FAILED";
   progress: number;
   outputUrl: string | null;
   errorMessage: string | null;
@@ -48,7 +48,7 @@ export async function waitForExport(
         const job = await getExportStatus(exportId);
         onProgress?.(job);
 
-        if (job.status === "COMPLETED" || job.status === "FAILED" || job.status === "FAILED") {
+        if (job.status === "COMPLETED" || job.status === "FAILED") {
           clearInterval(poll);
           resolve(job);
         } else if (attempts >= MAX_ATTEMPTS) {
