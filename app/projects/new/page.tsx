@@ -3,7 +3,7 @@
 // app/projects/new/page.tsx
 // Création d'un nouveau projet vidéo
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Monitor, Smartphone, Square, Zap } from "lucide-react";
 
@@ -16,7 +16,7 @@ const FORMATS: { id: Format; label: string; icon: React.ReactNode; desc: string 
   { id: "1:1", label: "Carré", icon: <Square className="w-6 h-6" />, desc: "Facebook, LinkedIn" },
 ];
 
-export default function NewProjectPage() {
+function NewProjectForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const templateId = searchParams.get("template");
@@ -183,5 +183,13 @@ export default function NewProjectPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function NewProjectPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-950" />}>
+      <NewProjectForm />
+    </Suspense>
   );
 }
