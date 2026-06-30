@@ -7,6 +7,8 @@ import { prisma } from "@/lib/prisma";
 import { randomUUID } from "crypto";
 import { VideoProject } from "@/types/project";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   try {
     const session = await auth();

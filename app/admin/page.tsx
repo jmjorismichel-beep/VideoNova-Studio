@@ -6,6 +6,8 @@ import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { Users, Folder, Download, AlertTriangle } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminPage() {
   const session = await auth();
 

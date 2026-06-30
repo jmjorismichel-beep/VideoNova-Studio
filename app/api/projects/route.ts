@@ -8,6 +8,8 @@ import { z } from "zod";
 import { randomUUID } from "crypto";
 import { VideoProject, VideoFormat, VideoResolution } from "@/types/project";
 
+export const dynamic = "force-dynamic";
+
 const createProjectSchema = z.object({
   name: z.string().min(1).max(100),
   format: z.enum(["16:9", "9:16", "1:1"]).default("16:9"),

@@ -8,6 +8,8 @@ import { writeFile, mkdir } from "fs/promises";
 import { join, extname } from "path";
 import { randomUUID } from "crypto";
 
+export const dynamic = "force-dynamic";
+
 // Types de fichiers autorisés
 const ALLOWED_TYPES: Record<string, string> = {
   // Vidéo

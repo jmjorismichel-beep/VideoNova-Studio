@@ -7,6 +7,8 @@ import { prisma } from "@/lib/prisma";
 import { exportQueue } from "@/workers/export-queue";
 import { z } from "zod";
 
+export const dynamic = "force-dynamic";
+
 const exportSchema = z.object({
   projectId: z.string(),
   resolution: z.enum(["720p", "1080p"]).default("1080p"),

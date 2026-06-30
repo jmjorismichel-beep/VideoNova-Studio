@@ -5,6 +5,8 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 // GET /api/templates
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
