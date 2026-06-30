@@ -39,7 +39,8 @@
   .project-card {
     @apply bg-gray-800/60 border border-gray-700/50 rounded-2xl overflow-hidden
            hover:border-orange-500/30 hover:bg-gray-800/80 transition-all duration-200
-           cursor-pointer group;
+           cursor-pointer;
+    /* La classe "group" doit être ajoutée directement dans le JSX, pas via @apply */
   }
 
   /* Input de formulaire */

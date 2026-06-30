@@ -177,7 +177,7 @@ function ProjectCard({ project }: { project: any }) {
   const updatedAgo = formatRelative(new Date(project.updatedAt));
 
   return (
-    <Link href={`/editor/${project.id}`} className="project-card block">
+    <Link href={`/editor/${project.id}`} className="project-card block group">
       {/* Thumbnail */}
       <div className="aspect-video bg-gray-900 relative overflow-hidden">
         {project.thumbnail ? (
